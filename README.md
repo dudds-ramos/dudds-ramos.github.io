@@ -7,13 +7,17 @@ Feito só com HTML, CSS e JavaScript: não tem framework, não tem etapa de buil
 
 Tudo o que aparece no site fica em **`js/conteudo.js`**. É o único arquivo que você precisa editar.
 
-1. Procure por `[COMPLETAR` e troque pelos seus dados: nome, links, número do WhatsApp e partes da bio.
-   Enquanto um campo continuar com `[COMPLETAR`, ele simplesmente não aparece no site.
+1. Procure por `[COMPLETAR` e troque pelos seus dados: LinkedIn, GitHub, e-mail, WhatsApp e detalhes da formação.
+   Enquanto um campo continuar com `[COMPLETAR`, ele simplesmente não aparece no site. Os botões de GitHub e LinkedIn, no início e no contato, só aparecem depois de preenchidos.
 2. **Foto:** coloque o arquivo em `assets/` (por exemplo, `assets/foto.jpg`) e preencha `pessoa.foto: "assets/foto.jpg"`.
    Enquanto não houver foto, o site mostra as suas iniciais.
 3. **WhatsApp:** preencha o número com DDI e DDD (por exemplo, `"55 11 98888-7777"`). Lembre que ele fica público.
-4. **Novo projeto:** copie um item da lista `projetos` e troque os textos.
-   Se ele não tiver demonstração, use `demo: null`.
+4. **Trajetória:** a linha do tempo fica em `sobre.linhaDoTempo`, do item mais antigo para o mais recente.
+5. **Novo projeto:** copie um item da lista `projetos` e troque os textos.
+   - Se ele não tiver demonstração, use `demo: null`.
+   - O link do repositório vai em `github`. Se ficar vazio, o botão não aparece.
+   - A imagem do card vai em `imagem` (por exemplo, `assets/projetos/meu-projeto.webp`). Se ficar vazia, o card mostra só o ícone.
+   - Nunca use print do sistema real com dados da empresa.
 
 ## Ver no computador
 

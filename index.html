@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portfólio</title>
-  <meta name="description" content="Estudante de ADS que cria sistemas para automatizar o dia a dia. Veja os projetos e teste as demos.">
-  <meta name="theme-color" content="#09090f">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' x2='1'%3E%3Cstop offset='0' stop-color='%23c4b5fd'/%3E%3Cstop offset='1' stop-color='%2367e8f9'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2309090f'/%3E%3Ccircle cx='32' cy='32' r='16' fill='url(%23g)'/%3E%3C/svg%3E">
+  <meta name="description" content="Estudante de Análise e Desenvolvimento de Sistemas com experiência em suporte de TI, monitoramento e automação de processos. Veja os projetos e teste as demonstrações.">
+  <meta name="theme-color" content="#090D14">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23121A26'/%3E%3Ctext x='32' y='41' font-family='Arial,sans-serif' font-size='26' font-weight='700' text-anchor='middle' fill='%2345C5E8'%3EER%3C/text%3E%3C/svg%3E">
 
   <!-- Compartilhamento (LinkedIn, Instagram, WhatsApp). Os robôs dessas redes não rodam JavaScript,
        por isso estes valores ficam escritos aqui. -->
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Portfólio · projetos com demos interativas">
-  <meta property="og:description" content="Estudante de ADS que cria sistemas para automatizar o dia a dia. Veja os projetos e teste as demos.">
+  <meta property="og:title" content="Eduarda Ramos · Tecnologia, dados e automação">
+  <meta property="og:description" content="Projetos de monitoramento e automação com demonstrações interativas.">
   <!-- ATUALIZE com o endereço real do site (veja o README) -->
   <meta property="og:url" content="https://SEU-USUARIO.github.io/">
   <!-- ATUALIZE com o endereço real do site (veja o README) -->
@@ -20,32 +20,51 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/componentes.css">
   <link rel="stylesheet" href="css/demos.css">
   <script type="module" src="js/main.js"></script>
 </head>
 <body>
-  <div class="luzes" aria-hidden="true"><span></span><span></span></div>
+  <a class="pular" href="#projetos">Pular para os projetos</a>
+
+  <header class="topo">
+    <nav class="nav" aria-label="Principal">
+      <a class="logo" href="#inicio" aria-label="Início"><span class="logo-texto">ER</span></a>
+      <button type="button" class="menu-botao" aria-expanded="false" aria-controls="menu" aria-label="Abrir menu">
+        <span></span><span></span>
+      </button>
+      <ul id="menu" class="menu">
+        <li><a href="#inicio">Início</a></li>
+        <li><a href="#projetos">Projetos</a></li>
+        <li><a href="#sobre">Sobre mim</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <main>
-    <section id="hero" class="hero"></section>
+    <section id="inicio" class="hero"></section>
 
     <section id="projetos">
-      <h2 class="revelar">Projetos</h2>
-      <p class="secao-sub revelar">Sistemas que eu uso de verdade no trabalho. Toque em um para ver como funciona.</p>
+      <div class="secao-cabeca revelar"><span class="secao-num">01</span><h2>Projetos</h2></div>
+      <p class="secao-sub revelar">Sistemas que desenvolvi e uso no dia a dia de trabalho. Cada um tem uma demonstração interativa com dados fictícios.</p>
       <div class="grade"></div>
     </section>
 
     <section id="sobre"></section>
 
-    <section id="contato" class="contato"></section>
+    <section id="contato"></section>
   </main>
 
-  <footer class="rodape">Feito à mão com HTML, CSS e JavaScript.</footer>
+  <footer class="rodape">
+    <span class="rodape-nome"></span>
+    <span>Feito com HTML, CSS e JavaScript.</span>
+  </footer>
 
   <dialog id="detalhe" aria-labelledby="detalhe-titulo"></dialog>
 

@@ -1,27 +1,42 @@
 :root {
-  --fundo: #09090f;
-  --texto: #f4f4f5;
-  --texto-2: #a1a1aa;
-  --roxo: #7c3aed;
-  --ciano: #0891b2;
-  --grad-a: #c4b5fd;
-  --grad-b: #67e8f9;
-  --brilho: #a78bfa;
-  --vidro: rgba(255, 255, 255, 0.04);
-  --vidro-forte: rgba(255, 255, 255, 0.07);
-  --borda: rgba(255, 255, 255, 0.1);
-  --vermelho: #f87171;
-  --ambar: #fbbf24;
-  --verde: #4ade80;
-  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  /* Paleta Dark Minimal Tech */
+  --fundo: #090D14;
+  --card: #121A26;
+  --card-2: #172131;
+  --acento: #45C5E8;
+  --acento-suave: rgba(69, 197, 232, 0.12);
+  --texto: #E5EAF2;
+  --texto-2: #9AA6B5;
+  --texto-3: #6B7787;
+  --borda: #1F2A3A;
+  --borda-forte: #2B394D;
+
+  /* Aliases usados pelas demos */
+  --vidro: var(--card);
+  --vidro-forte: var(--card-2);
+  --brilho: var(--acento);
+  --grad-a: var(--acento);
+  --grad-b: var(--acento);
+
+  --vermelho: #F07178;
+  --ambar: #F2C14E;
+  --verde: #5BD69A;
+
   --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --raio: 16px;
+  --mono: 'JetBrains Mono', ui-monospace, Consolas, 'Courier New', monospace;
+  --raio: 14px;
+  --topo-altura: 64px;
+  --largura: 1120px;
   color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--topo-altura) + 16px);
+  -webkit-text-size-adjust: 100%;
+}
 
 body {
   margin: 0;
@@ -29,60 +44,40 @@ body {
   color: var(--texto);
   font-family: var(--sans);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.65;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 img, svg { display: block; max-width: 100%; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
 
-h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.15; margin: 0 0 .5em; }
-h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); }
-h3 { font-size: 1.15rem; }
+h1, h2, h3 { font-weight: 600; line-height: 1.2; letter-spacing: -0.02em; margin: 0 0 .5em; }
+h2 { font-size: clamp(1.6rem, 4vw, 2.1rem); }
+h3 { font-size: 1.05rem; letter-spacing: -0.01em; }
 
-.grad {
-  background: linear-gradient(90deg, var(--grad-a), var(--grad-b));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+main { width: min(var(--largura), 100%); margin: 0 auto; padding: 0 20px; }
+main > section { padding: 88px 0; }
+@media (max-width: 639px) { main > section { padding: 64px 0; } }
 
-/* Luzes neon ao fundo */
-.luzes { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
-.luzes span {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  will-change: transform;
-}
-.luzes span:nth-child(1) {
-  width: 55vmax; height: 55vmax; background: var(--roxo); opacity: .38;
-  top: -20vmax; right: -18vmax;
-  animation: deriva 11s ease-in-out infinite;
-}
-.luzes span:nth-child(2) {
-  width: 48vmax; height: 48vmax; background: var(--ciano); opacity: .30;
-  bottom: -22vmax; left: -18vmax;
-  animation: deriva 9s ease-in-out infinite reverse;
-}
-@keyframes deriva {
-  50% { transform: translate(8vmax, 5vmax) scale(1.08); }
-}
-
-/* Animação de entrada */
-.revelar { opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; }
+/* Entrada discreta */
+.revelar { opacity: 0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
 .revelar.visivel { opacity: 1; transform: none; }
 
-main { width: min(1120px, 100%); margin: 0 auto; padding: 0 20px; }
-section { padding: 72px 0; }
+:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; border-radius: 6px; }
+
+.pular {
+  position: absolute; left: 16px; top: -60px; z-index: 100;
+  padding: 8px 14px; border-radius: 8px;
+  background: var(--acento); color: var(--fundo); font-weight: 600; text-decoration: none;
+}
+.pular:focus { top: 12px; }
 
 .noscript { text-align: center; color: var(--texto-2); padding: 24px; }
 
-:focus-visible { outline: 2px solid var(--brilho); outline-offset: 3px; border-radius: 6px; }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .luzes span, .card-vidro { animation: none !important; }
-  .revelar { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { transition-duration: 0s !important; animation-duration: 0s !important; animation-iteration-count: 1 !important; }
+  .revelar { opacity: 1; transform: none; }
 }

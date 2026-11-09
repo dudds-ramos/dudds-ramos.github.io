@@ -1,21 +1,31 @@
-import { escapeHtml, estaPreenchido, linkWhatsApp, iniciais, urlExterna } from './util.js';
+import { escapeHtml, estaPreenchido, linkWhatsApp, iniciais, urlExterna, emailValido } from './util.js';
 
 // Remove marcadores "[COMPLETAR: ...]" e devolve o texto que sobrar (ou '').
 function limpar(texto) {
   return String(texto ?? '').replace(/\[COMPLETAR[^\]]*\]/g, '').replace(/\s{2,}/g, ' ').trim();
 }
 
-function nomeExibido(nome) {
-  return estaPreenchido(nome) ? nome : 'Seu Nome';
-}
-
+const nomeExibido = (nome) => (estaPreenchido(nome) ? nome : 'Seu Nome');
 const tags = (lista) => lista.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join('');
 
+// Ícones em traço (24x24), herdam a cor do texto.
+const svg = (corpo, extra = '') =>
+  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"${extra}>${corpo}</svg>`;
+
 const ICONES = {
-  whatsapp: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2c-1.5 0-3-.4-4.3-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.4.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>',
-  linkedin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.75h4v11H3v-11Zm6.5 0h3.8v1.5h.1c.5-1 1.8-1.9 3.7-1.9 4 0 4.7 2.6 4.7 6v5.4h-4v-4.8c0-1.2 0-2.6-1.6-2.6s-1.9 1.2-1.9 2.5v4.9h-4v-11Z"/></svg>',
-  instagram: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 7.3a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4Zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6Zm6-7.9a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0ZM21.9 8.1c-.1-1.6-.4-3-1.6-4.2S17.7 2.2 16 2.1C14.3 2 9.7 2 8 2.1c-1.6.1-3 .4-4.2 1.6S2.2 6.3 2.1 8C2 9.7 2 14.3 2.1 16c.1 1.6.4 3 1.6 4.2s2.6 1.5 4.2 1.6c1.7.1 6.3.1 8 0 1.6-.1 3-.4 4.2-1.6s1.5-2.6 1.6-4.2c.1-1.7.1-6.3 0-8Zm-2.1 9.8a3.3 3.3 0 0 1-1.9 1.9c-1.3.5-4.4.4-5.9.4s-4.6.1-5.9-.4a3.3 3.3 0 0 1-1.9-1.9c-.5-1.3-.4-4.4-.4-5.9s-.1-4.6.4-5.9a3.3 3.3 0 0 1 1.9-1.9C7.4 3.7 10.5 3.8 12 3.8s4.6-.1 5.9.4a3.3 3.3 0 0 1 1.9 1.9c.5 1.3.4 4.4.4 5.9s.1 4.6-.4 5.9Z"/></svg>',
+  impressora: svg('<path d="M7 9V3h10v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M7 14h10v7H7z"/><path d="M17 12h.01"/>'),
+  documento: svg('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/>'),
+  email: svg('<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>'),
+  caixa: svg('<path d="M21 8 12 3 3 8v8l9 5 9-5z"/><path d="m3 8 9 5 9-5M12 13v8"/>'),
+  seta: svg('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+  externo: svg('<path d="M14 4h6v6M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/>'),
+  github: svg('<path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/>'),
+  linkedin: svg('<rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/>'),
+  instagram: svg('<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/>'),
+  whatsapp: svg('<path d="M3 21l1.7-4.6A8.5 8.5 0 1 1 8 19.6z"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a4 4 0 0 1-2.3-2.3l.8-1-1-2z"/>'),
 };
+
+const projetoIcone = (nome) => ICONES[nome] ?? ICONES.documento;
 
 export function tituloPagina(pessoa) {
   if (!estaPreenchido(pessoa.nome)) return 'Portfólio';
@@ -23,93 +33,159 @@ export function tituloPagina(pessoa) {
   return estaPreenchido(pessoa.cargo) ? `${nome} · ${pessoa.cargo.trim()}` : nome;
 }
 
-export function renderHero(pessoa) {
+export function renderLogo(pessoa) {
+  return iniciais(pessoa.nome);
+}
+
+function botaoExterno(url, rotulo, icone) {
+  const href = urlExterna(url);
+  return href
+    ? `<a class="btn btn-sec" href="${escapeHtml(href)}" target="_blank" rel="noopener">${ICONES[icone]}${rotulo}</a>`
+    : '';
+}
+
+export function renderHero(pessoa, contato = {}) {
+  const titulo = limpar(pessoa.titulo);
   const frase = limpar(pessoa.frase);
   return `
-    <p class="saudacao revelar">Olá, eu sou</p>
-    <h1 class="revelar"><span class="grad">${escapeHtml(nomeExibido(pessoa.nome))}</span></h1>
-    ${frase ? `<p class="frase revelar">${escapeHtml(frase)}</p>` : ''}
+    <p class="hero-rotulo revelar"><span class="ponto" aria-hidden="true"></span>Portfólio</p>
+    <h1 class="revelar">${escapeHtml(nomeExibido(pessoa.nome))}</h1>
+    ${titulo ? `<p class="hero-titulo revelar">${escapeHtml(titulo)}</p>` : ''}
+    ${frase ? `<p class="hero-frase revelar">${escapeHtml(frase)}</p>` : ''}
     <div class="tags revelar">${tags(pessoa.tecnologias ?? [])}</div>
-    <a class="btn revelar" href="#projetos">Ver projetos <span aria-hidden="true">↓</span></a>`;
+    <div class="hero-acoes revelar">
+      <a class="btn btn-pri" href="#projetos">Visualizar projetos ${ICONES.seta}</a>
+      ${botaoExterno(contato.github, 'GitHub', 'github')}
+      ${botaoExterno(contato.linkedin, 'LinkedIn', 'linkedin')}
+    </div>`;
 }
 
 export function renderProjetos(projetos) {
   return projetos
-    .map(
-      (p, i) => `
-    <button type="button" class="card-vidro revelar" style="--i:${i}" data-projeto-id="${escapeHtml(p.id)}">
-      <span class="card-num">0${i + 1}</span>
-      <h3>${escapeHtml(p.titulo)}</h3>
-      <p>${escapeHtml(limpar(p.resumo))}</p>
-      <span class="card-tecs">${p.tecnologias.map(escapeHtml).join(' · ')}</span>
-      ${p.demo ? '<span class="card-cta">Testar demo →</span>' : '<span class="card-cta">Ver detalhes →</span>'}
-    </button>`,
-    )
+    .map((p) => {
+      const imagem = estaPreenchido(p.imagem)
+        ? `<img src="${escapeHtml(p.imagem)}" alt="Interface da demonstração de ${escapeHtml(p.titulo)} (dados fictícios)" loading="lazy" width="640" height="400">`
+        : `<div class="card-capa-vazia">${projetoIcone(p.icone)}</div>`;
+      return `
+    <article class="card-projeto revelar">
+      <div class="card-capa">${imagem}</div>
+      <div class="card-corpo">
+        <div class="card-cabeca">
+          <span class="projeto-icone">${projetoIcone(p.icone)}</span>
+          <h3>${escapeHtml(p.titulo)}</h3>
+        </div>
+        <p>${escapeHtml(limpar(p.resumo))}</p>
+        <ul class="card-tecs" aria-label="Tecnologias">${p.tecnologias.map((t) => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
+        <button type="button" class="btn-link" data-projeto-id="${escapeHtml(p.id)}">Ver detalhes ${ICONES.seta}</button>
+      </div>
+    </article>`;
+    })
     .join('');
 }
 
 export function renderDetalhe(projeto) {
+  const objetivo = limpar(projeto.objetivo);
   const problema = limpar(projeto.problema);
   const itens = projeto.comoFeito.map(limpar).filter(Boolean);
+  const github = urlExterna(projeto.github);
   const demo = projeto.demo
     ? `
     <section class="demo" data-demo="${escapeHtml(projeto.demo)}">
-      <h3>Teste você mesmo</h3>
+      <h3>Demonstração</h3>
       <p class="aviso-demo">Dados fictícios, só para demonstração.</p>
       <div class="demo-palco"></div>
     </section>`
     : '';
   return `
-    <h2 id="detalhe-titulo"><span class="grad">${escapeHtml(projeto.titulo)}</span></h2>
-    <div class="tags">${tags(projeto.tecnologias)}</div>
-    ${problema ? `<h3>O problema</h3><p>${escapeHtml(problema)}</p>` : ''}
-    ${itens.length ? `<h3>Como foi feito</h3><ul>${itens.map((t) => `<li>${escapeHtml(t)}</li>`).join('')}</ul>` : ''}
+    <header class="detalhe-cabeca">
+      <span class="projeto-icone">${projetoIcone(projeto.icone)}</span>
+      <h2 id="detalhe-titulo">${escapeHtml(projeto.titulo)}</h2>
+    </header>
+    <div class="detalhe-grade">
+      ${objetivo ? `<section><h3>Objetivo</h3><p>${escapeHtml(objetivo)}</p></section>` : ''}
+      ${problema ? `<section><h3>O problema</h3><p>${escapeHtml(problema)}</p></section>` : ''}
+    </div>
+    ${itens.length ? `<section><h3>Principais funcionalidades</h3><ul class="lista-check">${itens.map((t) => `<li>${escapeHtml(t)}</li>`).join('')}</ul></section>` : ''}
+    <section><h3>Tecnologias</h3><div class="tags">${tags(projeto.tecnologias)}</div></section>
+    ${github ? `<a class="btn btn-sec" href="${escapeHtml(github)}" target="_blank" rel="noopener">${ICONES.github}Ver no GitHub</a>` : ''}
     ${demo}`;
 }
 
 export function renderSobre(sobre, pessoa) {
   const nome = nomeExibido(pessoa.nome);
+  const subtitulo = limpar(pessoa.subtitulo);
   const foto = estaPreenchido(pessoa.foto)
     ? `<img class="foto" src="${escapeHtml(pessoa.foto)}" alt="Foto de ${escapeHtml(nome)}" loading="lazy">`
     : `<div class="avatar" aria-hidden="true">${escapeHtml(iniciais(pessoa.nome))}</div>`;
-  const paragrafos = sobre.paragrafos.map(limpar).filter(Boolean);
-  const formacao = sobre.formacao
+  const paragrafos = (sobre.paragrafos ?? []).map(limpar).filter(Boolean);
+  const marcos = (sobre.linhaDoTempo ?? [])
+    .map((m) => {
+      const detalhe = limpar(m.detalhe);
+      return `
+        <li class="marco">
+          <span class="marco-quando">${escapeHtml(m.quando)}</span>
+          <strong>${escapeHtml(m.titulo)}</strong>
+          ${detalhe ? `<p>${escapeHtml(detalhe)}</p>` : ''}
+        </li>`;
+    })
+    .join('');
+  const formacao = (sobre.formacao ?? [])
     .map((f) => {
       const detalhe = limpar(f.detalhe);
       return `
-      <li class="formacao-item">
-        <div><strong>${escapeHtml(f.titulo)}</strong>${detalhe ? `<span>${escapeHtml(detalhe)}</span>` : ''}</div>
-        <span class="selo">${escapeHtml(f.status)}</span>
-      </li>`;
+        <li class="formacao-item">
+          <div><strong>${escapeHtml(f.titulo)}</strong>${detalhe ? `<span>${escapeHtml(detalhe)}</span>` : ''}</div>
+          <span class="selo">${escapeHtml(f.status)}</span>
+        </li>`;
     })
     .join('');
   return `
-    <h2 class="revelar">Sobre mim</h2>
+    <div class="secao-cabeca revelar"><span class="secao-num">02</span><h2>Sobre mim</h2></div>
     <div class="sobre-grade">
-      <div class="sobre-foto revelar">${foto}</div>
-      <div class="sobre-texto revelar">
-        ${paragrafos.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
-        ${formacao ? `<div class="formacao"><h3>Em formação</h3><ul>${formacao}</ul></div>` : ''}
+      <aside class="sobre-perfil revelar">
+        ${foto}
+        <strong class="perfil-nome">${escapeHtml(nome)}</strong>
+        ${subtitulo ? `<span class="perfil-sub">${escapeHtml(subtitulo)}</span>` : ''}
+      </aside>
+      <div class="sobre-texto">
+        <div class="revelar">${paragrafos.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}</div>
+        ${marcos ? `<div class="bloco revelar"><h3>Trajetória</h3><ol class="linha-tempo">${marcos}</ol></div>` : ''}
+        ${formacao ? `<div class="bloco quadro revelar"><h3>Formação e cursos</h3><ul>${formacao}</ul></div>` : ''}
       </div>
     </div>`;
 }
 
 export function renderContato(contato) {
+  const chamada = limpar(contato.chamada);
+  const canais = [];
+  if (emailValido(contato.email)) {
+    const email = contato.email.trim();
+    canais.push(['email', 'E-mail', email, `mailto:${email}`]);
+  }
+  for (const [id, rotulo] of [['linkedin', 'LinkedIn'], ['github', 'GitHub'], ['instagram', 'Instagram']]) {
+    const url = urlExterna(contato[id]);
+    if (url) canais.push([id, rotulo, url.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, ''), url]);
+  }
   const whats = linkWhatsApp(contato.whatsapp?.numero, contato.whatsapp?.mensagem);
-  const redes = [
-    ['linkedin', 'LinkedIn', contato.linkedin],
-    ['instagram', 'Instagram', contato.instagram],
-  ]
-    .map(([id, rotulo, url]) => [id, rotulo, urlExterna(url)])
-    .filter(([, , url]) => url)
+  if (whats) canais.push(['whatsapp', 'WhatsApp', 'Enviar mensagem', whats]);
+
+  const lista = canais
     .map(
-      ([id, rotulo, url]) =>
-        `<a class="rede" href="${escapeHtml(url)}" target="_blank" rel="noopener" aria-label="${rotulo}">${ICONES[id]}</a>`,
+      ([id, rotulo, texto, href]) => `
+      <a class="canal" href="${escapeHtml(href)}"${href.startsWith('mailto:') ? '' : ' target="_blank" rel="noopener"'}>
+        <span class="canal-icone">${ICONES[id]}</span>
+        <span class="canal-texto"><small>${rotulo}</small>${escapeHtml(texto)}</span>
+        <span class="canal-seta">${ICONES.externo}</span>
+      </a>`,
     )
     .join('');
   return `
-    <h2 class="revelar">Vamos conversar?</h2>
-    <p class="revelar">Curtiu algum projeto ou tem uma vaga em mente? Me chama.</p>
-    ${whats ? `<a class="btn-whats revelar" href="${escapeHtml(whats)}" target="_blank" rel="noopener">${ICONES.whatsapp}Fale comigo no WhatsApp</a>` : ''}
-    ${redes ? `<div class="redes revelar">${redes}</div>` : ''}`;
+    <div class="secao-cabeca revelar"><span class="secao-num">03</span><h2>Contato</h2></div>
+    <div class="contato-grade">
+      <div class="revelar">
+        <p class="contato-titulo">Vamos construir algo juntos?</p>
+        ${chamada ? `<p class="contato-chamada">${escapeHtml(chamada)}</p>` : ''}
+      </div>
+      ${lista ? `<div class="canais revelar">${lista}</div>` : ''}
+    </div>`;
 }

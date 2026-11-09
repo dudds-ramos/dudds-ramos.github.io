@@ -17,3 +17,14 @@ test('todo projeto tem os campos de texto preenchidos', () => {
 test('conteudo não tem campos que o site não usa', () => {
   assert.equal(conteudo.site, undefined);
 });
+
+test('conteudo tem os campos do novo layout', () => {
+  assert.ok(conteudo.pessoa.titulo && conteudo.pessoa.subtitulo);
+  assert.deepEqual(conteudo.pessoa.tecnologias, ['Python', 'SQL', 'JavaScript', 'Power BI', 'FastAPI', 'Automação', 'Ciência de Dados']);
+  for (const p of conteudo.projetos) {
+    assert.ok(p.objetivo, p.id);
+    assert.ok('github' in p && 'imagem' in p, p.id);
+  }
+  assert.ok(conteudo.sobre.linhaDoTempo.length >= 3);
+  assert.ok('email' in conteudo.contato && 'github' in conteudo.contato && conteudo.contato.chamada);
+});

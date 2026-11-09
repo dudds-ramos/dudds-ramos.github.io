@@ -25,6 +25,10 @@ export function urlExterna(url) {
   return null;
 }
 
+export function emailValido(email) {
+  return estaPreenchido(email) && /^[^\s@<>"']+@[^\s@<>"']+\.[a-z]{2,}$/i.test(email.trim());
+}
+
 export function iniciais(nome) {
   if (!estaPreenchido(nome)) return '?';
   const partes = nome.trim().split(/\s+/);

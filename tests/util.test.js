@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { escapeHtml, estaPreenchido, linkWhatsApp, iniciais, urlExterna } from '../js/util.js';
+import { escapeHtml, estaPreenchido, linkWhatsApp, iniciais, urlExterna, emailValido } from '../js/util.js';
 
 test('escapeHtml escapa caracteres especiais de HTML', () => {
   assert.equal(escapeHtml('<a href="x">&\''), '&lt;a href=&quot;x&quot;&gt;&amp;&#39;');
@@ -40,4 +40,12 @@ test('urlExterna aceita http(s), completa domínio sem esquema e rejeita o resto
   assert.equal(urlExterna('data:text/html,oi'), null);
   assert.equal(urlExterna('[COMPLETAR: https://...]'), null);
   assert.equal(urlExterna(''), null);
+});
+
+test('emailValido aceita endereço simples e rejeita placeholder ou texto solto', () => {
+  assert.equal(emailValido('ana@exemplo.com'), true);
+  assert.equal(emailValido(' ana.souza@dominio.com.br '), true);
+  assert.equal(emailValido('nao-e-email'), false);
+  assert.equal(emailValido('[COMPLETAR: seu@email.com]'), false);
+  assert.equal(emailValido(''), false);
 });
