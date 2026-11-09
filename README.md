@@ -16,7 +16,7 @@ Tudo o que aparece no site fica em **`js/conteudo.js`**. É o único arquivo que
 5. **Novo projeto:** copie um item da lista `projetos` e troque os textos.
    - Se ele não tiver demonstração, use `demo: null`.
    - O link do repositório vai em `github`. Se ficar vazio, o botão não aparece.
-   - A imagem do card vai em `imagem` (por exemplo, `assets/projetos/meu-projeto.webp`). Se ficar vazia, o card mostra só o ícone.
+   - A demonstração interativa aparece ao vivo na vitrine de projetos. Se o projeto **não** tiver demo, você pode mostrar uma imagem em `imagem` (por exemplo, `assets/projetos/meu-projeto.webp`). Sem demo e sem imagem, aparece só o texto.
    - Nunca use print do sistema real com dados da empresa.
 
 ## Ver no computador

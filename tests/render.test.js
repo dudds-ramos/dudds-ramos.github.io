@@ -42,20 +42,34 @@ test('renderLogo usa as iniciais do nome', () => {
 });
 
 // ---------- Projetos ----------
-test('renderProjetos gera um card por projeto com ícone e botão de detalhes', () => {
+test('renderProjetos gera um showcase por projeto com botão de detalhes', () => {
   const html = renderProjetos(conteudo.projetos);
+  assert.equal(contar(html, '<article class="showcase'), 4);
   assert.equal(contar(html, 'data-projeto-id='), 4);
-  assert.equal(contar(html, 'class="projeto-icone"'), 4);
   assert.equal(contar(html, 'Ver detalhes'), 4);
 });
 
-test('renderProjetos só mostra imagem quando preenchida, com texto alternativo', () => {
-  const base = conteudo.projetos[0];
+test('renderProjetos alterna o lado da demonstração a cada projeto', () => {
+  const html = renderProjetos(conteudo.projetos);
+  assert.equal(contar(html, 'showcase invertido'), 2);
+});
+
+test('renderProjetos reserva a área da demo interativa ao vivo, marcada como fictícia', () => {
+  const html = renderProjetos([conteudo.projetos[0]]);
+  assert.ok(html.includes('data-vitrine="impressoras"'));
+  assert.ok(html.includes('Dados fictícios'));
+  assert.ok(!html.includes('<img'));
+});
+
+test('projeto sem demo usa a imagem como fallback, ou só o texto', () => {
+  const base = { ...conteudo.projetos[0], demo: null };
   const com = renderProjetos([{ ...base, imagem: 'assets/projetos/x.webp' }]);
   assert.ok(com.includes('<img'));
-  assert.ok(com.includes(`alt="Interface da demonstração de ${base.titulo}`));
+  assert.ok(com.includes(`alt="Interface de ${base.titulo}`));
+  assert.ok(!com.includes('data-vitrine'));
   const sem = renderProjetos([{ ...base, imagem: '' }]);
   assert.ok(!sem.includes('<img'));
+  assert.ok(!sem.includes('data-vitrine'));
 });
 
 // ---------- Detalhe ----------

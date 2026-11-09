@@ -14,7 +14,7 @@ export const conteudo = {
     titulo: "Tecnologia, dados e automação.",
     subtitulo: "Estudante de Análise e Desenvolvimento de Sistemas",
     frase:
-      "Estudante de Análise e Desenvolvimento de Sistemas, com experiência em suporte de TI, monitoramento de ambientes tecnológicos e desenvolvimento de soluções para automatizar processos.",
+      "Estudante de Análise e Desenvolvimento de Sistemas, com experiência em suporte de TI, monitoramento e desenvolvimento de soluções para automatização de processos.",
     foto: "", // ex.: "assets/foto.jpg" (vazio mostra as iniciais)
     tecnologias: ["Python", "SQL", "JavaScript", "Power BI", "FastAPI", "Automação", "Ciência de Dados"],
   },
@@ -22,7 +22,7 @@ export const conteudo = {
   // Para adicionar um projeto sem demonstração, use demo: null.
   // icone: "impressora" | "documento" | "email" | "caixa"
   // github: link do repositório (vazio = o botão não aparece)
-  // imagem: captura da interface (vazio = o card mostra só o ícone)
+  // imagem: usada só quando o projeto não tem demo (as demos aparecem ao vivo na vitrine)
   projetos: [
     {
       id: "impressoras",

@@ -2,6 +2,7 @@ import { conteudo } from './conteudo.js';
 import { renderHero, renderProjetos, renderSobre, renderContato, tituloPagina, renderLogo } from './render.js';
 import { abrirDetalhe, iniciarDetalhe } from './detalhe.js';
 import { estaPreenchido } from './util.js';
+import { iniciarVitrine } from './vitrine.js';
 
 const $ = (sel) => document.querySelector(sel);
 
@@ -59,29 +60,31 @@ function ligarMenu() {
     if (menu.classList.contains('aberto') && !ev.target.closest('.nav')) definirAberto(false);
   });
 
-  // Borda do menu aparece depois de rolar.
-  const aoRolar = () => topo.classList.toggle('rolou', window.scrollY > 8);
+  // Borda do menu depois de rolar + destaque da seção atual:
+  // a seção ativa é a última cujo topo já passou de 40% da altura da tela.
+  const secoes = links
+    .map((a) => [a, document.getElementById(a.getAttribute('href').slice(1))])
+    .filter(([, s]) => s);
+  let agendado = false;
+  const atualizar = () => {
+    agendado = false;
+    topo.classList.toggle('rolou', window.scrollY > 8);
+    const linha = window.innerHeight * 0.4;
+    let ativo = secoes[0]?.[0];
+    for (const [a, s] of secoes) if (s.getBoundingClientRect().top <= linha) ativo = a;
+    // No fim da página, o último item fica ativo mesmo que a seção seja curta.
+    if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2) ativo = secoes.at(-1)?.[0];
+    links.forEach((a) => a.classList.toggle('ativo', a === ativo));
+  };
+  const aoRolar = () => {
+    if (!agendado) {
+      agendado = true;
+      requestAnimationFrame(atualizar);
+    }
+  };
   window.addEventListener('scroll', aoRolar, { passive: true });
-  aoRolar();
-
-  // Destaca a seção visível no menu.
-  if ('IntersectionObserver' in window) {
-    const porId = new Map(links.map((a) => [a.getAttribute('href').slice(1), a]));
-    const obs = new IntersectionObserver(
-      (entradas) => {
-        for (const e of entradas) {
-          if (!e.isIntersecting) continue;
-          links.forEach((a) => a.classList.remove('ativo'));
-          porId.get(e.target.id)?.classList.add('ativo');
-        }
-      },
-      { rootMargin: '-45% 0px -50% 0px' },
-    );
-    porId.forEach((_, id) => {
-      const secao = document.getElementById(id);
-      if (secao) obs.observe(secao);
-    });
-  }
+  window.addEventListener('resize', aoRolar);
+  atualizar();
 }
 
 function ligarProjetos() {
@@ -101,3 +104,4 @@ renderizar();
 animarEntrada();
 ligarMenu();
 ligarProjetos();
+iniciarVitrine($('#projetos'));
