@@ -74,9 +74,9 @@ export const conteudo = {
 
   sobre: {
     paragrafos: [
-      "Terminei a escola em 2023 sem saber muito bem que caminho seguir. Mas a tecnologia sempre esteve por perto: cresci jogando, curiosa com tudo, e era eu quem ajudava meus pais sempre que algo no computador ou no celular dava problema.",
-      "Para eu não ficar parada, meus pais me matricularam em um curso de informática, e foi ali que me apaixonei de vez. Comecei a estudar e, poucos meses depois, já trabalhava no mesmo lugar como monitora. Continuei aprendendo até me tornar instrutora de informática, passando por cursos de programação, Power BI, AutoCAD, gestão empresarial e muito mais.",
-      "Hoje desenvolvo sistemas internos em uma empresa de TI onde atuo. Não importa a área: o que me move é fazer a tecnologia trabalhar a nosso favor, seja para automatizar processos demorados, seja para aprender aquilo que ainda não sabemos.",
+      "Tenho 20 anos e sou estudante de Análise e Desenvolvimento de Sistemas. Meu interesse por tecnologia vem desde cedo e, em 2023, logo após concluir o ensino médio, iniciei um curso de informática que definiu minha trajetória profissional.",
+      "Em poucos meses, passei de aluna a monitora e, em seguida, a instrutora de informática. Nesse período, ampliei minha formação com cursos de programação, Power BI, AutoCAD e gestão empresarial, além de desenvolver a habilidade de explicar tecnologia de forma clara para diferentes públicos.",
+      "Atualmente, desenvolvo sistemas internos em uma empresa de TI, com foco em automação de processos e monitoramento. Meu objetivo é usar a tecnologia para eliminar tarefas manuais, ganhar eficiência e transformar dados em decisões, área que venho aprofundando com estudos em Ciência de Dados.",
     ],
     formacao: [
       { titulo: "Análise e Desenvolvimento de Sistemas", status: "Cursando", detalhe: "[COMPLETAR: instituição · semestre]" },
