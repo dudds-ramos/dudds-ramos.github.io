@@ -119,7 +119,7 @@ export const conteudo = {
   contato: {
     chamada: "Estou aberta a oportunidades profissionais e a projetos em desenvolvimento, automação e dados.",
     // Links: pode colar com ou sem https:// (ex.: "linkedin.com/in/seu-perfil").
-    linkedin: "[COMPLETAR: https://www.linkedin.com/in/...]",
+    linkedin: "https://www.linkedin.com/in/eduarda-ramos-4bb7242b2",
     github: "[COMPLETAR: https://github.com/...]",
     email: "[COMPLETAR: seu@email.com]",
     instagram: "[COMPLETAR: https://www.instagram.com/...]",
