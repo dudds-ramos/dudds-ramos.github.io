@@ -36,6 +36,17 @@ test('renderHero sempre tem "Visualizar projetos", GitHub só se preenchido e nu
   assert.ok(!cheio.includes('linkedin'));
 });
 
+test('renderHero tem espaço de foto: imagem quando preenchida, iniciais quando não', () => {
+  const sem = renderHero(pessoa({ nome: 'Ana Souza', foto: '' }), semLinks);
+  assert.ok(sem.includes('class="hero-foto'));
+  assert.ok(sem.includes('AS'));
+  assert.ok(!sem.includes('<img'));
+  const com = renderHero(pessoa({ nome: 'Ana Souza', foto: 'assets/foto.jpg' }), semLinks);
+  assert.ok(com.includes('<img'));
+  assert.ok(com.includes('src="assets/foto.jpg"'));
+  assert.ok(com.includes('alt="Foto de Ana Souza"'));
+});
+
 test('renderLogo usa as iniciais do nome', () => {
   assert.equal(renderLogo({ nome: 'Eduarda Ramos' }), 'ER');
 });

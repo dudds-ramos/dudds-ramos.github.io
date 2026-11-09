@@ -10,7 +10,7 @@ Tudo o que aparece no site fica em **`js/conteudo.js`**. É o único arquivo que
 1. Procure por `[COMPLETAR` e troque pelos seus dados: LinkedIn, GitHub, e-mail, WhatsApp e detalhes da formação.
    Enquanto um campo continuar com `[COMPLETAR`, ele simplesmente não aparece no site. Os botões de GitHub e LinkedIn, no início e no contato, só aparecem depois de preenchidos.
 2. **Foto:** coloque o arquivo em `assets/` (por exemplo, `assets/foto.jpg`) e preencha `pessoa.foto: "assets/foto.jpg"`.
-   Enquanto não houver foto, o site mostra as suas iniciais.
+   A foto aparece na abertura (ao lado do nome) e no "Sobre mim". Prefira uma foto **vertical** (proporção 4:5, por exemplo 800×1000 px). Enquanto não houver foto, o site mostra as suas iniciais.
 3. **WhatsApp:** preencha o número com DDI e DDD (por exemplo, `"55 11 98888-7777"`). Lembre que ele fica público.
 4. **Trajetória:** a linha do tempo fica em `sobre.linhaDoTempo`, do item mais antigo para o mais recente.
 5. **Novo projeto:** copie um item da lista `projetos` e troque os textos.

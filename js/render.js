@@ -47,16 +47,23 @@ function botaoExterno(url, rotulo, icone) {
 export function renderHero(pessoa, contato = {}) {
   const titulo = limpar(pessoa.titulo);
   const frase = limpar(pessoa.frase);
+  const nome = nomeExibido(pessoa.nome).trim();
+  const foto = estaPreenchido(pessoa.foto)
+    ? `<img src="${escapeHtml(pessoa.foto)}" alt="Foto de ${escapeHtml(nome)}">`
+    : `<span class="hero-foto-iniciais" aria-hidden="true">${escapeHtml(iniciais(pessoa.nome))}</span>`;
   return `
-    <span class="chip revelar">Portfólio</span>
-    <h1 class="hero-nome revelar">${escapeHtml(nomeExibido(pessoa.nome).trim())}</h1>
-    ${titulo ? `<p class="hero-titulo revelar">${escapeHtml(titulo)}</p>` : ''}
-    ${frase ? `<p class="hero-frase revelar">${escapeHtml(frase)}</p>` : ''}
-    <div class="hero-acoes revelar">
-      <a class="btn btn-pri" href="#projetos">Visualizar projetos ${ICONES.seta}</a>
-      ${botaoExterno(contato.github, 'GitHub', 'github')}
+    <div class="hero-texto">
+      <span class="chip revelar">Portfólio</span>
+      <h1 class="hero-nome revelar">${escapeHtml(nome)}</h1>
+      ${titulo ? `<p class="hero-titulo revelar">${escapeHtml(titulo)}</p>` : ''}
+      ${frase ? `<p class="hero-frase revelar">${escapeHtml(frase)}</p>` : ''}
+      <div class="hero-acoes revelar">
+        <a class="btn btn-pri" href="#projetos">Visualizar projetos ${ICONES.seta}</a>
+        ${botaoExterno(contato.github, 'GitHub', 'github')}
+      </div>
+      <div class="tags revelar" aria-label="Tecnologias">${tags(pessoa.tecnologias ?? [])}</div>
     </div>
-    <div class="tags centro revelar" aria-label="Tecnologias">${tags(pessoa.tecnologias ?? [])}</div>`;
+    <div class="hero-foto revelar">${foto}</div>`;
 }
 
 // Abas dos projetos (padrão WAI-ARIA tabs: só a aba ativa entra no Tab).
