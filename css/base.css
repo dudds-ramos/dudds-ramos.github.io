@@ -22,9 +22,9 @@
   --ambar: #F2C14E;
   --verde: #5BD69A;
 
-  /* Tipografia: Space Grotesk nos títulos, Inter no texto, mono nos detalhes técnicos */
-  --titulo: 'Space Grotesk', 'Inter', system-ui, sans-serif;
-  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* Tipografia: Arial/Helvetica em todo o site; mono só no esquema técnico e nas demos */
+  --titulo: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+  --sans: Arial, 'Helvetica Neue', Helvetica, sans-serif;
   --mono: 'JetBrains Mono', ui-monospace, Consolas, 'Courier New', monospace;
 
   --raio: 14px;
@@ -57,9 +57,9 @@ img, svg { display: block; max-width: 100%; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
 
-h1, h2, h3 { margin: 0 0 .4em; font-weight: 600; }
-h2 { font-family: var(--titulo); font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.02; letter-spacing: -0.035em; }
-h3 { font-family: var(--titulo); font-size: clamp(1.6rem, 2.8vw, 2.2rem); line-height: 1.1; letter-spacing: -0.025em; }
+h1, h2, h3 { margin: 0 0 .4em; font-weight: 700; }
+h2 { font-family: var(--titulo); font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.02; letter-spacing: -0.03em; }
+h3 { font-family: var(--titulo); font-size: clamp(1.6rem, 2.8vw, 2.2rem); line-height: 1.12; letter-spacing: -0.02em; }
 
 main { width: min(var(--largura), 100%); margin: 0 auto; padding: 0 var(--margem); }
 main > section { padding: clamp(80px, 12vw, 160px) 0; }

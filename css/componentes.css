@@ -17,7 +17,7 @@
   display: flex; align-items: center; justify-content: space-between;
 }
 .logo {
-  font-family: var(--titulo); font-size: 1.3rem; font-weight: 600; line-height: 1;
+  font-family: var(--titulo); font-size: 1.3rem; font-weight: 700; line-height: 1;
   text-decoration: none; color: var(--texto);
   letter-spacing: -0.02em;
 }
@@ -70,7 +70,7 @@
   }
   .menu.aberto { opacity: 1; visibility: visible; transform: none; }
   .menu li + li { border-top: 1px solid var(--borda); }
-  .menu a { padding: 16px 0; font-family: var(--titulo); font-size: 1.35rem; font-weight: 500; letter-spacing: -0.02em; color: var(--texto); }
+  .menu a { padding: 16px 0; font-family: var(--titulo); font-size: 1.35rem; font-weight: 400; letter-spacing: -0.02em; color: var(--texto); }
   .menu a::after { display: none; }
   .menu a.ativo { color: var(--acento); }
 }
@@ -82,7 +82,7 @@
   display: inline-flex; align-items: center; gap: 10px;
   padding: 13px 22px;
   border-radius: 999px;
-  font-size: .92rem; font-weight: 500;
+  font-size: .92rem; font-weight: 700;
   text-decoration: none;
   transition: background .2s ease, transform .2s ease;
 }
@@ -105,7 +105,7 @@
   display: inline-flex; align-items: center; gap: 10px;
   padding: 0 0 6px; border: 0; background: none;
   border-bottom: 1px solid var(--borda-forte);
-  font-size: .95rem; font-weight: 500;
+  font-size: .95rem; font-weight: 700;
   color: var(--texto);
   cursor: pointer;
   transition: border-color .2s ease, color .2s ease;
@@ -117,7 +117,7 @@
 .rotulo {
   display: inline-flex; align-items: center; gap: 10px;
   margin: 0;
-  font-family: var(--mono); font-size: .76rem; letter-spacing: .12em; text-transform: uppercase;
+  font-family: var(--sans); font-size: .76rem; letter-spacing: .12em; text-transform: uppercase;
   color: var(--texto-2);
 }
 .ponto { width: 6px; height: 6px; border-radius: 50%; background: var(--acento); }
@@ -138,14 +138,14 @@
 .hero-nome {
   font-family: var(--titulo);
   font-size: clamp(3rem, 8.2vw, 6.6rem);
-  font-weight: 600;
+  font-weight: 700;
   line-height: .95;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   margin: 26px 0 26px;
   max-width: 7.5em;
 }
 .hero-titulo {
-  font-family: var(--titulo); font-weight: 500;
+  font-family: var(--titulo); font-weight: 400;
   font-size: clamp(1.35rem, 2.6vw, 1.9rem);
   line-height: 1.2;
   letter-spacing: -0.025em;
@@ -163,7 +163,7 @@
 
 /* Tecnologias: texto discreto, sem caixas */
 .tags { display: flex; flex-wrap: wrap; gap: 4px 0; }
-.tag { font-family: var(--mono); font-size: .76rem; color: var(--texto-3); }
+.tag { font-family: var(--sans); font-size: .76rem; color: var(--texto-3); }
 .tag:not(:last-child)::after { content: '/'; margin: 0 12px; color: var(--borda-forte); }
 
 /* Entrada escalonada */
@@ -195,7 +195,7 @@
    ========================================================= */
 .secao-cabeca { display: flex; align-items: flex-start; gap: 18px; margin: 0; }
 .secao-cabeca h2 { margin: 0; }
-.secao-num { font-family: var(--mono); font-size: .8rem; color: var(--acento); padding-top: .6em; }
+.secao-num { font-family: var(--sans); font-size: .8rem; color: var(--acento); padding-top: .6em; }
 
 .secao-topo { display: grid; gap: 24px; align-items: end; margin-bottom: clamp(56px, 8vw, 110px); }
 @media (min-width: 1024px) { .secao-topo { grid-template-columns: 1fr 1fr; gap: 72px; } }
@@ -220,7 +220,7 @@
 
 .showcase-num {
   display: flex; align-items: center; gap: 12px;
-  font-family: var(--mono); font-size: .8rem; color: var(--texto-3);
+  font-family: var(--sans); font-size: .8rem; color: var(--texto-3);
   margin-bottom: 18px;
 }
 .projeto-icone { display: inline-grid; place-items: center; color: var(--acento); }
@@ -229,7 +229,7 @@
 .showcase-resumo { font-size: 1.12rem; color: var(--texto); margin: 0 0 12px; }
 .showcase-objetivo { color: var(--texto-2); margin: 0 0 22px; font-size: .98rem; }
 .showcase-tecs { list-style: none; margin: 0 0 30px; padding: 0; display: flex; flex-wrap: wrap; gap: 4px 0; }
-.showcase-tecs li { font-family: var(--mono); font-size: .76rem; color: var(--texto-3); }
+.showcase-tecs li { font-family: var(--sans); font-size: .76rem; color: var(--texto-3); }
 .showcase-tecs li:not(:last-child)::after { content: '/'; margin: 0 10px; color: var(--borda-forte); }
 
 /* Janela que emoldura a demo ao vivo */
@@ -244,7 +244,7 @@
   display: flex; align-items: center; gap: 14px;
   padding: 12px 16px;
   border-bottom: 1px solid var(--borda);
-  font-family: var(--mono); font-size: .72rem;
+  font-family: var(--sans); font-size: .72rem;
 }
 .janela-pontos { display: flex; gap: 6px; }
 .janela-pontos i { width: 9px; height: 9px; border-radius: 50%; background: var(--borda-forte); }
@@ -262,7 +262,7 @@
 }
 @media (max-width: 767px) { .janela-palco { max-height: 540px; } }
 .janela > img { width: 100%; height: auto; }
-.vitrine-carregando { color: var(--texto-3); font-family: var(--mono); font-size: .8rem; margin: 0; padding: 40px 0; text-align: center; }
+.vitrine-carregando { color: var(--texto-3); font-family: var(--sans); font-size: .8rem; margin: 0; padding: 40px 0; text-align: center; }
 
 /* =========================================================
    Sobre mim — editorial
@@ -274,7 +274,7 @@
   .sobre-corpo { grid-column: 9 / span 4; }
 }
 .sobre-lead {
-  font-family: var(--titulo); font-weight: 500;
+  font-family: var(--titulo); font-weight: 400;
   font-size: clamp(1.4rem, 2.4vw, 1.95rem);
   line-height: 1.38;
   letter-spacing: -0.02em;
@@ -287,12 +287,12 @@
 .foto { object-fit: cover; }
 .avatar {
   display: grid; place-items: center;
-  font-family: var(--titulo); font-size: 1.3rem; font-weight: 600;
+  font-family: var(--titulo); font-size: 1.3rem; font-weight: 700;
   color: var(--acento);
   background: var(--card);
   border: 1px solid var(--borda-forte);
 }
-.perfil-nome { display: block; font-weight: 500; color: var(--texto); }
+.perfil-nome { display: block; font-weight: 700; color: var(--texto); }
 .perfil-sub { display: block; font-size: .88rem; color: var(--texto-3); line-height: 1.4; }
 
 .sobre-rodape { display: grid; gap: 56px; margin-top: clamp(72px, 9vw, 120px); }
@@ -302,7 +302,7 @@
   .sobre-rodape > .bloco:last-child { grid-column: 9 / span 4; }
 }
 .bloco h3 {
-  font-family: var(--mono); font-size: .76rem; font-weight: 400;
+  font-family: var(--sans); font-size: .76rem; font-weight: 400;
   letter-spacing: .12em; text-transform: uppercase;
   color: var(--texto-2);
   margin: 0 0 26px;
@@ -318,9 +318,9 @@
   border-bottom: 1px solid var(--borda);
 }
 .marco:last-child { border-bottom: 0; }
-.marco-quando { grid-row: span 2; font-family: var(--mono); font-size: .76rem; color: var(--texto-3); padding-top: .25em; }
+.marco-quando { grid-row: span 2; font-family: var(--sans); font-size: .76rem; color: var(--texto-3); padding-top: .25em; }
 .marco:nth-last-child(-n+2) .marco-quando { color: var(--acento); }
-.marco strong { font-weight: 500; }
+.marco strong { font-weight: 700; }
 .marco p { margin: 0; color: var(--texto-2); font-size: .94rem; }
 @media (max-width: 479px) {
   .marco { grid-template-columns: 1fr; }
@@ -331,9 +331,9 @@
 .formacao { list-style: none; margin: 0; padding: 0; }
 .formacao-item { display: flex; flex-direction: column; gap: 2px; padding: 16px 0; border-bottom: 1px solid var(--borda); }
 .formacao-item:last-child { border-bottom: 0; }
-.formacao-item strong { font-weight: 500; }
+.formacao-item strong { font-weight: 700; }
 .formacao-detalhe { color: var(--texto-2); font-size: .92rem; }
-.selo { font-family: var(--mono); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); }
+.selo { font-family: var(--sans); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; color: var(--acento); }
 
 /* =========================================================
    Contato
@@ -344,7 +344,7 @@
   .contato-grade > div { grid-column: 1 / span 7; }
   .canais { grid-column: 8 / span 5; }
 }
-.contato-titulo { font-family: var(--titulo); font-weight: 600; font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.05; letter-spacing: -0.035em; margin: 0 0 22px; max-width: 12ch; }
+.contato-titulo { font-family: var(--titulo); font-weight: 700; font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.05; letter-spacing: -0.035em; margin: 0 0 22px; max-width: 12ch; }
 .contato-chamada { color: var(--texto-2); margin: 0; max-width: 44ch; font-size: 1.05rem; }
 .canais { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--borda); }
 .canais li { border-bottom: 1px solid var(--borda); }
@@ -355,7 +355,7 @@
   transition: padding .25s ease, color .2s ease;
 }
 .canal:hover { padding-left: 8px; }
-.canal-rotulo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--texto-3); }
+.canal-rotulo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--sans); font-size: .74rem; letter-spacing: .08em; text-transform: uppercase; color: var(--texto-3); }
 .canal-rotulo svg { width: 17px; height: 17px; color: var(--texto-2); }
 .canal-texto { overflow-wrap: anywhere; }
 .canal-seta svg { width: 18px; height: 18px; color: var(--texto-3); transition: color .2s ease; }
@@ -397,7 +397,7 @@
 .detalhe-cabeca .projeto-icone svg { width: 24px; height: 24px; }
 .detalhe-conteudo section { margin-bottom: 28px; }
 .detalhe-conteudo h3 {
-  font-family: var(--mono); font-size: .74rem; font-weight: 400;
+  font-family: var(--sans); font-size: .74rem; font-weight: 400;
   letter-spacing: .12em; text-transform: uppercase;
   color: var(--texto-2); margin: 0 0 10px;
 }
