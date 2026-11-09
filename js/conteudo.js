@@ -8,10 +8,11 @@ export const conteudo = {
   // O título da aba é montado a partir do nome. A prévia do link (LinkedIn/WhatsApp)
   // é configurada no index.html — veja o README, seção "Publicar".
   pessoa: {
-    nome: "[COMPLETAR: Seu Nome]",
+    nome: "Eduarda Ramos",
+    cargo: "Desenvolvedora", // aparece no título da aba: "Eduarda Ramos · Desenvolvedora"
     foto: "", // ex.: "assets/foto.jpg" (vazio mostra as iniciais)
     frase: "Estudante de ADS · crio sistemas que automatizam o dia a dia",
-    tecnologias: ["Python", "FastAPI", "SQL", "JavaScript", "Automação", "Ciência de Dados"],
+    tecnologias: ["Python", "FastAPI", "SQL", "JavaScript", "Power BI", "Automação", "Ciência de Dados"],
   },
 
   // Para adicionar um projeto sem demonstração, use demo: null.
@@ -73,12 +74,14 @@ export const conteudo = {
 
   sobre: {
     paragrafos: [
-      "Hoje desenvolvo sistemas internos em uma empresa de TI onde atuo, e foi lá que descobri que gosto mesmo é de transformar tarefa repetitiva em sistema. [COMPLETAR: como você chegou na TI]",
-      "Os projetos aqui nasceram de problemas reais do dia a dia e hoje são usados de verdade. [COMPLETAR: o que você mais gosta de resolver]",
+      "Terminei a escola em 2023 sem saber muito bem que caminho seguir. Mas a tecnologia sempre esteve por perto: cresci jogando, curiosa com tudo, e era eu quem ajudava meus pais sempre que algo no computador ou no celular dava problema.",
+      "Para eu não ficar parada, meus pais me matricularam em um curso de informática, e foi ali que me apaixonei de vez. Comecei a estudar e, poucos meses depois, já trabalhava no mesmo lugar como monitora. Continuei aprendendo até me tornar instrutora de informática, passando por cursos de programação, Power BI, AutoCAD, gestão empresarial e muito mais.",
+      "Hoje desenvolvo sistemas internos em uma empresa de TI onde atuo. Não importa a área: o que me move é fazer a tecnologia trabalhar a nosso favor, seja para automatizar processos demorados, seja para aprender aquilo que ainda não sabemos.",
     ],
     formacao: [
       { titulo: "Análise e Desenvolvimento de Sistemas", status: "Cursando", detalhe: "[COMPLETAR: instituição · semestre]" },
-      { titulo: "Programação por conta própria", status: "Contínuo", detalhe: "Python, APIs, automação e boas práticas com testes" },
+      { titulo: "Instrutora de informática", status: "Experiência", detalhe: "De aluna a monitora e depois instrutora, ensinando e aprendendo todos os dias" },
+      { titulo: "Cursos livres", status: "Concluídos", detalhe: "Programação, Power BI, AutoCAD e gestão empresarial" },
       { titulo: "Ciência de Dados", status: "Começando", detalhe: "[COMPLETAR: o que está estudando agora]" },
     ],
   },

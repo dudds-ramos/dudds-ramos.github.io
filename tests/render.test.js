@@ -73,9 +73,10 @@ test('renderContato monta o botão do WhatsApp com número válido', () => {
   assert.ok(html.includes('https://wa.me/5511988887777?text=oi'));
 });
 
-test('tituloPagina usa o nome quando preenchido e nunca mostra o marcador', () => {
-  assert.equal(tituloPagina({ nome: 'Ana Souza' }), 'Ana Souza · Desenvolvedor');
-  assert.equal(tituloPagina({ nome: '[COMPLETAR: Seu Nome]' }), 'Portfólio');
+test('tituloPagina usa nome e cargo quando preenchidos e nunca mostra o marcador', () => {
+  assert.equal(tituloPagina({ nome: 'Ana Souza', cargo: 'Desenvolvedora' }), 'Ana Souza · Desenvolvedora');
+  assert.equal(tituloPagina({ nome: 'Ana Souza', cargo: '' }), 'Ana Souza');
+  assert.equal(tituloPagina({ nome: '[COMPLETAR: Seu Nome]', cargo: 'Desenvolvedora' }), 'Portfólio');
 });
 
 test('renderContato completa link sem https e ignora esquemas perigosos', () => {

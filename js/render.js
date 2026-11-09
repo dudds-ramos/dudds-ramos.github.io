@@ -18,7 +18,9 @@ const ICONES = {
 };
 
 export function tituloPagina(pessoa) {
-  return estaPreenchido(pessoa.nome) ? `${pessoa.nome.trim()} · Desenvolvedor` : 'Portfólio';
+  if (!estaPreenchido(pessoa.nome)) return 'Portfólio';
+  const nome = pessoa.nome.trim();
+  return estaPreenchido(pessoa.cargo) ? `${nome} · ${pessoa.cargo.trim()}` : nome;
 }
 
 export function renderHero(pessoa) {
