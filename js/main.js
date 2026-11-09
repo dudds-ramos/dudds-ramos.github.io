@@ -1,18 +1,18 @@
 import { conteudo } from './conteudo.js';
-import { renderHero, renderProjetos, renderSobre, renderContato, tituloPagina, renderLogo } from './render.js';
+import { renderHero, renderSobre, renderContato, tituloPagina, renderLogo } from './render.js';
 import { abrirDetalhe, iniciarDetalhe } from './detalhe.js';
 import { estaPreenchido } from './util.js';
-import { iniciarVitrine } from './vitrine.js';
+import { iniciarProjetos } from './projetos.js';
 
 const $ = (sel) => document.querySelector(sel);
 
 function renderizar() {
   const { pessoa, contato } = conteudo;
   $('#inicio').innerHTML = renderHero(pessoa, contato);
-  $('#projetos .grade').innerHTML = renderProjetos(conteudo.projetos);
   $('#sobre').innerHTML = renderSobre(conteudo.sobre, pessoa);
   $('#contato').innerHTML = renderContato(contato);
-  $('.logo-texto').textContent = renderLogo(pessoa);
+  $('.logo-icone').textContent = renderLogo(pessoa);
+  $('.logo-nome').textContent = estaPreenchido(pessoa.nome) ? pessoa.nome : '';
   $('.rodape-nome').textContent = estaPreenchido(pessoa.nome) ? `© ${new Date().getFullYear()} ${pessoa.nome}` : '';
   document.title = tituloPagina(pessoa);
 }
@@ -89,14 +89,15 @@ function ligarMenu() {
 
 function ligarProjetos() {
   iniciarDetalhe();
-  $('#projetos .grade').addEventListener('click', (ev) => {
+  $('#projetos').addEventListener('click', (ev) => {
     const botao = ev.target.closest('[data-projeto-id]');
     if (!botao) return;
     const projeto = conteudo.projetos.find((p) => p.id === botao.dataset.projetoId);
     if (projeto) abrirDetalhe(projeto);
   });
-  // Link compartilhável: site.com/#notas abre direto o detalhe.
+  // Link compartilhável: site.com/#notas abre direto o detalhe (e deixa a aba selecionada).
   const doHash = conteudo.projetos.find((p) => p.id === decodeURIComponent(location.hash.slice(1)));
+  iniciarProjetos($('#projetos'), conteudo.projetos, doHash?.id);
   if (doHash) abrirDetalhe(doHash, { daUrl: true });
 }
 
@@ -104,4 +105,3 @@ renderizar();
 animarEntrada();
 ligarMenu();
 ligarProjetos();
-iniciarVitrine($('#projetos'));

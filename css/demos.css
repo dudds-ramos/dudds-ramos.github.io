@@ -58,7 +58,7 @@
 .imp-log {
   list-style: none; margin: 0; padding: 10px 12px;
   border-radius: 12px;
-  background: #0B111A;
+  background: #04100F;
   border: 1px solid var(--borda);
   font-family: Consolas, 'Courier New', monospace;
   font-size: .75rem;
@@ -144,7 +144,7 @@
   padding: 10px 12px;
   border-radius: 12px;
   border: 1px solid var(--borda);
-  background: #0E1520;
+  background: var(--card);
   color: var(--texto);
   font: inherit; font-size: .9rem;
 }

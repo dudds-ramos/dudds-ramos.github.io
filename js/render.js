@@ -7,7 +7,6 @@ function limpar(texto) {
 
 const nomeExibido = (nome) => (estaPreenchido(nome) ? nome : 'Seu Nome');
 const tags = (lista) => lista.map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join('');
-const numero = (i) => String(i + 1).padStart(2, '0');
 
 // Ícones em traço (24x24), herdam a cor do texto.
 const svg = (corpo) =>
@@ -28,41 +27,6 @@ const ICONES = {
 
 const projetoIcone = (nome) => ICONES[nome] ?? ICONES.documento;
 
-// Esquema decorativo da abertura: o caminho dos dados nos sistemas que ela constrói
-// (coleta → banco → API → painel, com alertas automáticos). Sem números inventados.
-const NO = (x, y, w, rotulo, destaque = false) => `
-  <g class="no${destaque ? ' no-destaque' : ''}">
-    <rect x="${x}" y="${y}" width="${w}" height="36" rx="8"/>
-    <text x="${x + 14}" y="${y + 23}">${rotulo}</text>
-  </g>`;
-const DIAGRAMA = `
-<svg class="diagrama" viewBox="0 0 520 560" role="presentation" aria-hidden="true" focusable="false">
-  <defs>
-    <pattern id="pontos" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1"/></pattern>
-  </defs>
-  <rect class="grade-pontos" width="520" height="560" fill="url(#pontos)"/>
-  <g class="ligacoes">
-    <path d="M140 108 C 180 108, 180 200, 210 200"/>
-    <path d="M140 200 L 210 200"/>
-    <path d="M140 292 C 180 292, 180 200, 210 200"/>
-    <path d="M338 200 C 362 200, 362 108, 386 108"/>
-    <path d="M440 126 L 440 182"/>
-    <path d="M440 218 L 440 274"/>
-    <path class="fluxo" d="M274 218 L 274 380"/>
-  </g>
-  ${NO(28, 90, 112, 'impressora')}
-  ${NO(28, 182, 112, 'impressora')}
-  ${NO(28, 274, 112, 'impressora')}
-  ${NO(210, 182, 128, 'coletor.py', true)}
-  ${NO(386, 90, 108, 'SQLite')}
-  ${NO(386, 182, 108, 'FastAPI')}
-  ${NO(386, 274, 108, 'painel')}
-  ${NO(196, 380, 156, 'alerta → e-mail')}
-  <circle class="pulso" cx="338" cy="200" r="4"/>
-  <text class="legenda" x="28" y="500">coleta · monitoramento · automação</text>
-  <line class="legenda-linha" x1="28" y1="516" x2="492" y2="516"/>
-</svg>`;
-
 export function tituloPagina(pessoa) {
   if (!estaPreenchido(pessoa.nome)) return 'Portfólio';
   const nome = pessoa.nome.trim();
@@ -73,78 +37,73 @@ export function renderLogo(pessoa) {
   return iniciais(pessoa.nome);
 }
 
-function linkExterno(url, rotulo, icone) {
+function botaoExterno(url, rotulo, icone) {
   const href = urlExterna(url);
   return href
-    ? `<a class="link-ext" href="${escapeHtml(href)}" target="_blank" rel="noopener">${ICONES[icone]}<span>${rotulo}</span></a>`
+    ? `<a class="btn btn-sec" href="${escapeHtml(href)}" target="_blank" rel="noopener">${ICONES[icone]}${rotulo}</a>`
     : '';
 }
 
 export function renderHero(pessoa, contato = {}) {
   const titulo = limpar(pessoa.titulo);
   const frase = limpar(pessoa.frase);
-  const nomeHtml = escapeHtml(nomeExibido(pessoa.nome).trim());
   return `
-    <div class="hero-texto">
-      <p class="rotulo revelar"><span class="ponto" aria-hidden="true"></span>Portfólio</p>
-      <h1 class="hero-nome revelar">${nomeHtml}</h1>
-      ${titulo ? `<p class="hero-titulo revelar">${escapeHtml(titulo)}</p>` : ''}
-      ${frase ? `<p class="hero-frase revelar">${escapeHtml(frase)}</p>` : ''}
-      <div class="hero-pe revelar">
-        <div class="hero-acoes">
-          <a class="btn btn-pri" href="#projetos">Visualizar projetos ${ICONES.seta}</a>
-          ${linkExterno(contato.github, 'GitHub', 'github')}
-          ${linkExterno(contato.linkedin, 'LinkedIn', 'linkedin')}
-        </div>
-        <div class="tags" aria-label="Tecnologias">${tags(pessoa.tecnologias ?? [])}</div>
-      </div>
+    <span class="chip revelar">Portfólio</span>
+    <h1 class="hero-nome revelar">${escapeHtml(nomeExibido(pessoa.nome).trim())}</h1>
+    ${titulo ? `<p class="hero-titulo revelar">${escapeHtml(titulo)}</p>` : ''}
+    ${frase ? `<p class="hero-frase revelar">${escapeHtml(frase)}</p>` : ''}
+    <div class="hero-acoes revelar">
+      <a class="btn btn-pri" href="#projetos">Visualizar projetos ${ICONES.seta}</a>
+      ${botaoExterno(contato.github, 'GitHub', 'github')}
+      ${botaoExterno(contato.linkedin, 'LinkedIn', 'linkedin')}
     </div>
-    <div class="hero-visual revelar">${DIAGRAMA}</div>`;
+    <div class="tags centro revelar" aria-label="Tecnologias">${tags(pessoa.tecnologias ?? [])}</div>`;
+}
+
+// Abas dos projetos (padrão WAI-ARIA tabs: só a aba ativa entra no Tab).
+export function renderAbas(projetos, ativoId) {
+  return projetos
+    .map((p) => {
+      const ativo = p.id === ativoId;
+      return `<button type="button" role="tab" class="aba" id="aba-${escapeHtml(p.id)}" data-aba="${escapeHtml(p.id)}" aria-selected="${ativo}" aria-controls="painel-projeto"${ativo ? '' : ' tabindex="-1"'}>${projetoIcone(p.icone)}<span>${escapeHtml(p.titulo)}</span></button>`;
+    })
+    .join('');
 }
 
 function visualProjeto(p) {
   if (p.demo) {
     return `
-      <div class="janela">
-        <div class="janela-barra">
+      <div class="demo-janela">
+        <div class="demo-barra">
           <span class="janela-pontos" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span class="janela-titulo">${escapeHtml(p.titulo)}</span>
-          <span class="janela-aviso">Dados fictícios · interativo</span>
+          <span class="demo-ao-vivo">ao vivo · dados fictícios</span>
         </div>
-        <div class="janela-palco" data-vitrine="${escapeHtml(p.demo)}">
+        <div class="demo-area" data-vitrine="${escapeHtml(p.demo)}">
           <p class="vitrine-carregando">Carregando demonstração…</p>
         </div>
       </div>`;
   }
   if (estaPreenchido(p.imagem)) {
-    return `
-      <div class="janela">
-        <div class="janela-barra"><span class="janela-pontos" aria-hidden="true"><i></i><i></i><i></i></span><span class="janela-titulo">${escapeHtml(p.titulo)}</span></div>
-        <img src="${escapeHtml(p.imagem)}" alt="Interface de ${escapeHtml(p.titulo)}" loading="lazy">
-      </div>`;
+    return `<div class="demo-janela"><img src="${escapeHtml(p.imagem)}" alt="Interface de ${escapeHtml(p.titulo)}" loading="lazy"></div>`;
   }
   return '';
 }
 
-export function renderProjetos(projetos) {
-  return projetos
-    .map((p, i) => {
-      const visual = visualProjeto(p);
-      const classes = ['showcase', i % 2 ? 'invertido' : '', visual ? '' : 'sem-visual'].filter(Boolean).join(' ');
-      return `
-    <article class="${classes}" id="projeto-${escapeHtml(p.id)}">
-      ${visual ? `<div class="showcase-visual revelar">${visual}</div>` : ''}
-      <div class="showcase-texto revelar">
-        <span class="showcase-num"><span class="projeto-icone">${projetoIcone(p.icone)}</span>${numero(i)}</span>
+export function renderPainelProjeto(p) {
+  const itens = p.comoFeito.map(limpar).filter(Boolean);
+  const visual = visualProjeto(p);
+  return `
+    <div class="painel-projeto${visual ? '' : ' sem-visual'}">
+      <div class="projeto-info">
+        <span class="projeto-icone grande">${projetoIcone(p.icone)}</span>
         <h3>${escapeHtml(p.titulo)}</h3>
-        <p class="showcase-resumo">${escapeHtml(limpar(p.resumo))}</p>
-        ${limpar(p.objetivo) ? `<p class="showcase-objetivo">${escapeHtml(limpar(p.objetivo))}</p>` : ''}
-        <ul class="showcase-tecs" aria-label="Tecnologias">${p.tecnologias.map((t) => `<li>${escapeHtml(t)}</li>`).join('')}</ul>
+        <p class="projeto-resumo">${escapeHtml(limpar(p.resumo))}</p>
+        ${itens.length ? `<ul class="lista-check">${itens.map((t) => `<li>${escapeHtml(t)}</li>`).join('')}</ul>` : ''}
+        <div class="tags">${tags(p.tecnologias)}</div>
         <button type="button" class="btn-link" data-projeto-id="${escapeHtml(p.id)}">Ver detalhes do projeto ${ICONES.seta}</button>
       </div>
-    </article>`;
-    })
-    .join('');
+      ${visual ? `<div class="projeto-visual">${visual}</div>` : ''}
+    </div>`;
 }
 
 export function renderDetalhe(projeto) {
@@ -181,7 +140,7 @@ export function renderSobre(sobre, pessoa) {
   const foto = estaPreenchido(pessoa.foto)
     ? `<img class="foto" src="${escapeHtml(pessoa.foto)}" alt="Foto de ${escapeHtml(nome)}" loading="lazy">`
     : `<div class="avatar" aria-hidden="true">${escapeHtml(iniciais(pessoa.nome))}</div>`;
-  const [lead, ...resto] = (sobre.paragrafos ?? []).map(limpar).filter(Boolean);
+  const paragrafos = (sobre.paragrafos ?? []).map(limpar).filter(Boolean);
   const marcos = (sobre.linhaDoTempo ?? [])
     .map((m) => {
       const detalhe = limpar(m.detalhe);
@@ -198,27 +157,25 @@ export function renderSobre(sobre, pessoa) {
       const detalhe = limpar(f.detalhe);
       return `
         <li class="formacao-item">
+          <div><strong>${escapeHtml(f.titulo)}</strong>${detalhe ? `<span>${escapeHtml(detalhe)}</span>` : ''}</div>
           <span class="selo">${escapeHtml(f.status)}</span>
-          <strong>${escapeHtml(f.titulo)}</strong>
-          ${detalhe ? `<span class="formacao-detalhe">${escapeHtml(detalhe)}</span>` : ''}
         </li>`;
     })
     .join('');
   return `
-    <header class="secao-cabeca revelar"><span class="secao-num">02</span><h2>Sobre mim</h2></header>
-    <div class="sobre-grade">
-      ${lead ? `<p class="sobre-lead revelar">${escapeHtml(lead)}</p>` : ''}
-      <div class="sobre-corpo revelar">
+    <h2 class="titulo-secao revelar">Sobre mim</h2>
+    <div class="painel sobre-painel revelar">
+      <div class="sobre-texto">
         <div class="perfil">
           ${foto}
           <div><strong class="perfil-nome">${escapeHtml(nome)}</strong>${subtitulo ? `<span class="perfil-sub">${escapeHtml(subtitulo)}</span>` : ''}</div>
         </div>
-        ${resto.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
+        ${paragrafos.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
       </div>
-    </div>
-    <div class="sobre-rodape">
-      ${marcos ? `<div class="bloco revelar"><h3>Trajetória</h3><ol class="linha-tempo">${marcos}</ol></div>` : ''}
-      ${formacao ? `<div class="bloco revelar"><h3>Formação e cursos</h3><ul class="formacao">${formacao}</ul></div>` : ''}
+      <div class="sobre-lado">
+        ${marcos ? `<div class="bloco"><h3>Trajetória</h3><ol class="linha-tempo">${marcos}</ol></div>` : ''}
+        ${formacao ? `<div class="bloco"><h3>Formação e cursos</h3><ul class="formacao">${formacao}</ul></div>` : ''}
+      </div>
     </div>`;
 }
 
@@ -227,32 +184,25 @@ export function renderContato(contato) {
   const canais = [];
   if (emailValido(contato.email)) {
     const email = contato.email.trim();
-    canais.push(['email', 'E-mail', email, `mailto:${email}`]);
+    canais.push(['email', 'E-mail', `mailto:${email}`]);
   }
   for (const [id, rotulo] of [['linkedin', 'LinkedIn'], ['github', 'GitHub'], ['instagram', 'Instagram']]) {
     const url = urlExterna(contato[id]);
-    if (url) canais.push([id, rotulo, url.replace(/^https?:\/\/(www\.)?/i, '').replace(/\/$/, ''), url]);
+    if (url) canais.push([id, rotulo, url]);
   }
   const whats = linkWhatsApp(contato.whatsapp?.numero, contato.whatsapp?.mensagem);
-  if (whats) canais.push(['whatsapp', 'WhatsApp', 'Enviar mensagem', whats]);
+  if (whats) canais.push(['whatsapp', 'WhatsApp', whats]);
 
   const lista = canais
     .map(
-      ([id, rotulo, texto, href]) => `
-      <li><a class="canal" href="${escapeHtml(href)}"${href.startsWith('mailto:') ? '' : ' target="_blank" rel="noopener"'}>
-        <span class="canal-rotulo">${ICONES[id]}${rotulo}</span>
-        <span class="canal-texto">${escapeHtml(texto)}</span>
-        <span class="canal-seta">${ICONES.externo}</span>
-      </a></li>`,
+      ([id, rotulo, href]) =>
+        `<a class="btn btn-sec" href="${escapeHtml(href)}"${href.startsWith('mailto:') ? '' : ' target="_blank" rel="noopener"'}>${ICONES[id]}${rotulo}</a>`,
     )
     .join('');
   return `
-    <header class="secao-cabeca revelar"><span class="secao-num">03</span><h2>Contato</h2></header>
-    <div class="contato-grade">
-      <div class="revelar">
-        <p class="contato-titulo">Vamos construir algo juntos?</p>
-        ${chamada ? `<p class="contato-chamada">${escapeHtml(chamada)}</p>` : ''}
-      </div>
-      ${lista ? `<ul class="canais revelar">${lista}</ul>` : ''}
+    <div class="painel contato-painel revelar">
+      <h2 class="titulo-secao">Vamos conversar?</h2>
+      ${chamada ? `<p class="contato-chamada">${escapeHtml(chamada)}</p>` : ''}
+      ${lista ? `<div class="canais">${lista}</div>` : ''}
     </div>`;
 }

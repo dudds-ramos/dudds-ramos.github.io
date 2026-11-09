@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  renderHero, renderProjetos, renderDetalhe, renderSobre, renderContato, tituloPagina, renderLogo,
+  renderHero, renderAbas, renderPainelProjeto, renderDetalhe, renderSobre, renderContato, tituloPagina, renderLogo,
 } from '../js/render.js';
 import { conteudo } from '../js/conteudo.js';
 
@@ -41,35 +41,47 @@ test('renderLogo usa as iniciais do nome', () => {
   assert.equal(renderLogo({ nome: 'Eduarda Ramos' }), 'ER');
 });
 
-// ---------- Projetos ----------
-test('renderProjetos gera um showcase por projeto com botão de detalhes', () => {
-  const html = renderProjetos(conteudo.projetos);
-  assert.equal(contar(html, '<article class="showcase'), 4);
-  assert.equal(contar(html, 'data-projeto-id='), 4);
-  assert.equal(contar(html, 'Ver detalhes'), 4);
+// ---------- Projetos (abas + painel único) ----------
+test('renderAbas cria uma aba por projeto e marca só a ativa', () => {
+  const html = renderAbas(conteudo.projetos, 'notas');
+  assert.equal(contar(html, 'role="tab"'), 4);
+  assert.equal(contar(html, 'aria-selected="true"'), 1);
+  assert.ok(html.includes('data-aba="notas" aria-selected="true"'));
+  assert.equal(contar(html, 'aria-controls="painel-projeto"'), 4);
+  assert.equal(contar(html, 'tabindex="-1"'), 3);
 });
 
-test('renderProjetos alterna o lado da demonstração a cada projeto', () => {
-  const html = renderProjetos(conteudo.projetos);
-  assert.equal(contar(html, 'showcase invertido'), 2);
+test('renderPainelProjeto mostra texto, funcionalidades, tecnologias e detalhes', () => {
+  const p = conteudo.projetos[0];
+  const html = renderPainelProjeto(p);
+  assert.ok(html.includes(p.titulo));
+  assert.ok(html.includes(p.comoFeito[0]));
+  assert.ok(html.includes('class="tag"'));
+  assert.ok(html.includes(`data-projeto-id="${p.id}"`));
+  assert.ok(html.includes('Ver detalhes'));
 });
 
-test('renderProjetos reserva a área da demo interativa ao vivo, marcada como fictícia', () => {
-  const html = renderProjetos([conteudo.projetos[0]]);
+test('renderPainelProjeto reserva a demo ao vivo, marcada como fictícia', () => {
+  const html = renderPainelProjeto(conteudo.projetos[0]);
   assert.ok(html.includes('data-vitrine="impressoras"'));
-  assert.ok(html.includes('Dados fictícios'));
+  assert.ok(html.includes('dados fictícios'));
   assert.ok(!html.includes('<img'));
 });
 
 test('projeto sem demo usa a imagem como fallback, ou só o texto', () => {
   const base = { ...conteudo.projetos[0], demo: null };
-  const com = renderProjetos([{ ...base, imagem: 'assets/projetos/x.webp' }]);
+  const com = renderPainelProjeto({ ...base, imagem: 'assets/projetos/x.webp' });
   assert.ok(com.includes('<img'));
   assert.ok(com.includes(`alt="Interface de ${base.titulo}`));
   assert.ok(!com.includes('data-vitrine'));
-  const sem = renderProjetos([{ ...base, imagem: '' }]);
+  const sem = renderPainelProjeto({ ...base, imagem: '' });
   assert.ok(!sem.includes('<img'));
   assert.ok(!sem.includes('data-vitrine'));
+});
+
+test('renderPainelProjeto escapa texto do dono', () => {
+  const html = renderPainelProjeto({ ...conteudo.projetos[0], titulo: 'A <b> & B' });
+  assert.ok(html.includes('A &lt;b&gt; &amp; B'));
 });
 
 // ---------- Detalhe ----------
