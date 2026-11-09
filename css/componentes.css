@@ -17,9 +17,9 @@
   display: flex; align-items: center; justify-content: space-between;
 }
 .logo {
-  font-family: var(--serif); font-size: 1.7rem; line-height: 1;
+  font-family: var(--titulo); font-size: 1.3rem; font-weight: 600; line-height: 1;
   text-decoration: none; color: var(--texto);
-  letter-spacing: .02em;
+  letter-spacing: -0.02em;
 }
 .logo:hover { color: var(--acento); }
 
@@ -70,7 +70,7 @@
   }
   .menu.aberto { opacity: 1; visibility: visible; transform: none; }
   .menu li + li { border-top: 1px solid var(--borda); }
-  .menu a { padding: 16px 0; font-family: var(--serif); font-size: 1.6rem; color: var(--texto); }
+  .menu a { padding: 16px 0; font-family: var(--titulo); font-size: 1.35rem; font-weight: 500; letter-spacing: -0.02em; color: var(--texto); }
   .menu a::after { display: none; }
   .menu a.ativo { color: var(--acento); }
 }
@@ -136,18 +136,20 @@
 }
 
 .hero-nome {
-  font-family: var(--serif);
-  font-size: clamp(3.6rem, 10.5vw, 8.4rem);
-  line-height: .92;
-  letter-spacing: -0.02em;
+  font-family: var(--titulo);
+  font-size: clamp(3rem, 8.2vw, 6.6rem);
+  font-weight: 600;
+  line-height: .95;
+  letter-spacing: -0.045em;
   margin: 26px 0 26px;
   max-width: 7.5em;
 }
 .hero-titulo {
-  font-family: var(--serif); font-style: italic;
-  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
-  line-height: 1.15;
-  color: var(--texto);
+  font-family: var(--titulo); font-weight: 500;
+  font-size: clamp(1.35rem, 2.6vw, 1.9rem);
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--acento);
   margin: 0 0 22px;
 }
 .hero-frase {
@@ -272,9 +274,10 @@
   .sobre-corpo { grid-column: 9 / span 4; }
 }
 .sobre-lead {
-  font-family: var(--serif);
-  font-size: clamp(1.7rem, 3vw, 2.5rem);
-  line-height: 1.25;
+  font-family: var(--titulo); font-weight: 500;
+  font-size: clamp(1.4rem, 2.4vw, 1.95rem);
+  line-height: 1.38;
+  letter-spacing: -0.02em;
   margin: 0;
   color: var(--texto);
 }
@@ -284,7 +287,7 @@
 .foto { object-fit: cover; }
 .avatar {
   display: grid; place-items: center;
-  font-family: var(--serif); font-size: 1.6rem;
+  font-family: var(--titulo); font-size: 1.3rem; font-weight: 600;
   color: var(--acento);
   background: var(--card);
   border: 1px solid var(--borda-forte);
@@ -341,7 +344,7 @@
   .contato-grade > div { grid-column: 1 / span 7; }
   .canais { grid-column: 8 / span 5; }
 }
-.contato-titulo { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.02; margin: 0 0 22px; max-width: 12ch; }
+.contato-titulo { font-family: var(--titulo); font-weight: 600; font-size: clamp(2rem, 4.4vw, 3.4rem); line-height: 1.05; letter-spacing: -0.035em; margin: 0 0 22px; max-width: 12ch; }
 .contato-chamada { color: var(--texto-2); margin: 0; max-width: 44ch; font-size: 1.05rem; }
 .canais { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--borda); }
 .canais li { border-bottom: 1px solid var(--borda); }
@@ -390,7 +393,7 @@
 
 .detalhe-conteudo { position: relative; padding: clamp(24px, 4vw, 44px); }
 .detalhe-cabeca { display: flex; align-items: center; gap: 14px; padding-right: 52px; margin-bottom: 30px; }
-.detalhe-cabeca h2 { margin: 0; font-size: clamp(2rem, 4.4vw, 3rem); }
+.detalhe-cabeca h2 { margin: 0; font-size: clamp(1.6rem, 3.6vw, 2.3rem); }
 .detalhe-cabeca .projeto-icone svg { width: 24px; height: 24px; }
 .detalhe-conteudo section { margin-bottom: 28px; }
 .detalhe-conteudo h3 {
