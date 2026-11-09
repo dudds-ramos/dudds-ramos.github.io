@@ -124,6 +124,6 @@ export const conteudo = {
     email: "[COMPLETAR: seu@email.com]",
     instagram: "[COMPLETAR: https://www.instagram.com/...]",
     // Número com DDI e DDD, só dígitos ou com espaços: ex. "55 11 98888-7777"
-    whatsapp: { numero: "[COMPLETAR: 55DDDNUMERO]", mensagem: "Oi! Vi seu portfólio e queria conversar." },
+    whatsapp: { numero: "55 21 97461-4350", mensagem: "Oi! Vi seu portfólio e queria conversar." },
   },
 };
