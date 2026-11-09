@@ -110,7 +110,7 @@ export const conteudo = {
       { quando: "Hoje", titulo: "Graduação e Ciência de Dados", detalhe: "Cursando Análise e Desenvolvimento de Sistemas e começando em Ciência de Dados." },
     ],
     formacao: [
-      { titulo: "Análise e Desenvolvimento de Sistemas", status: "Cursando", detalhe: "[COMPLETAR: instituição · semestre]" },
+      { titulo: "Análise e Desenvolvimento de Sistemas", status: "Cursando", detalhe: "Unilasalle · Niterói (RJ) · 3º semestre" },
       { titulo: "Cursos livres", status: "Concluídos", detalhe: "Programação, Power BI, AutoCAD e gestão empresarial" },
       { titulo: "Ciência de Dados", status: "Começando", detalhe: "[COMPLETAR: o que está estudando agora]" },
     ],
@@ -121,7 +121,7 @@ export const conteudo = {
     // Links: pode colar com ou sem https:// (ex.: "linkedin.com/in/seu-perfil").
     linkedin: "https://www.linkedin.com/in/eduarda-ramos-4bb7242b2",
     github: "[COMPLETAR: https://github.com/...]",
-    email: "[COMPLETAR: seu@email.com]",
+    email: "eduardaramos1028@hotmail.com",
     instagram: "[COMPLETAR: https://www.instagram.com/...]",
     // Número com DDI e DDD, só dígitos ou com espaços: ex. "55 11 98888-7777"
     whatsapp: { numero: "55 21 97461-4350", mensagem: "Oi! Vi seu portfólio e queria conversar." },
