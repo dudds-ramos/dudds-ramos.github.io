@@ -1,0 +1,88 @@
+:root {
+  --fundo: #09090f;
+  --texto: #f4f4f5;
+  --texto-2: #a1a1aa;
+  --roxo: #7c3aed;
+  --ciano: #0891b2;
+  --grad-a: #c4b5fd;
+  --grad-b: #67e8f9;
+  --brilho: #a78bfa;
+  --vidro: rgba(255, 255, 255, 0.04);
+  --vidro-forte: rgba(255, 255, 255, 0.07);
+  --borda: rgba(255, 255, 255, 0.1);
+  --vermelho: #f87171;
+  --ambar: #fbbf24;
+  --verde: #4ade80;
+  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --raio: 16px;
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.15; margin: 0 0 .5em; }
+h2 { font-size: clamp(1.8rem, 5vw, 2.6rem); }
+h3 { font-size: 1.15rem; }
+
+.grad {
+  background: linear-gradient(90deg, var(--grad-a), var(--grad-b));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Luzes neon ao fundo */
+.luzes { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.luzes span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  will-change: transform;
+}
+.luzes span:nth-child(1) {
+  width: 55vmax; height: 55vmax; background: var(--roxo); opacity: .38;
+  top: -20vmax; right: -18vmax;
+  animation: deriva 11s ease-in-out infinite;
+}
+.luzes span:nth-child(2) {
+  width: 48vmax; height: 48vmax; background: var(--ciano); opacity: .30;
+  bottom: -22vmax; left: -18vmax;
+  animation: deriva 9s ease-in-out infinite reverse;
+}
+@keyframes deriva {
+  50% { transform: translate(8vmax, 5vmax) scale(1.08); }
+}
+
+/* Animação de entrada */
+.revelar { opacity: 0; transform: translateY(16px); transition: opacity .8s ease, transform .8s ease; }
+.revelar.visivel { opacity: 1; transform: none; }
+
+main { width: min(1120px, 100%); margin: 0 auto; padding: 0 20px; }
+section { padding: 72px 0; }
+
+.noscript { text-align: center; color: var(--texto-2); padding: 24px; }
+
+:focus-visible { outline: 2px solid var(--brilho); outline-offset: 3px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .luzes span, .card-vidro { animation: none !important; }
+  .revelar { opacity: 1; transform: none; transition: none; }
+}
