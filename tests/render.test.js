@@ -26,15 +26,14 @@ test('renderHero mostra "Seu Nome" enquanto o nome é placeholder', () => {
   assert.ok(!html.includes('[COMPLETAR'));
 });
 
-test('renderHero sempre tem "Visualizar projetos" e só mostra GitHub/LinkedIn preenchidos', () => {
+test('renderHero sempre tem "Visualizar projetos", GitHub só se preenchido e nunca LinkedIn', () => {
   const vazio = renderHero(pessoa(), semLinks);
   assert.ok(vazio.includes('href="#projetos"'));
   assert.ok(vazio.includes('Visualizar projetos'));
   assert.ok(!vazio.includes('GitHub'));
-  assert.ok(!vazio.includes('LinkedIn'));
   const cheio = renderHero(pessoa(), { ...semLinks, github: 'github.com/ana', linkedin: 'https://linkedin.com/in/ana' });
   assert.ok(cheio.includes('href="https://github.com/ana"'));
-  assert.ok(cheio.includes('href="https://linkedin.com/in/ana"'));
+  assert.ok(!cheio.includes('linkedin'));
 });
 
 test('renderLogo usa as iniciais do nome', () => {

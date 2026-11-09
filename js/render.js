@@ -55,7 +55,6 @@ export function renderHero(pessoa, contato = {}) {
     <div class="hero-acoes revelar">
       <a class="btn btn-pri" href="#projetos">Visualizar projetos ${ICONES.seta}</a>
       ${botaoExterno(contato.github, 'GitHub', 'github')}
-      ${botaoExterno(contato.linkedin, 'LinkedIn', 'linkedin')}
     </div>
     <div class="tags centro revelar" aria-label="Tecnologias">${tags(pessoa.tecnologias ?? [])}</div>`;
 }
